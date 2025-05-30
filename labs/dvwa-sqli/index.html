@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DVWA SQLi Lab</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <h1>DVWA - SQL Injection (Low Security)</h1>
+
+  <p><strong>Goal:</strong> Demonstrate basic SQL injection and suggest mitigation.</p>
+
+  <h2>🧩 Setup</h2>
+  <ul>
+    <li>Docker image: <code>vulnerables/web-dvwa</code></li>
+    <li>Security level: <strong>Low</strong></li>
+  </ul>
+
+  <h2>🚨 Exploit</h2>
+  <pre>admin' OR '1'='1' --</pre>
+
+  <h2>✅ Result</h2>
+  <p>Bypasses login, authenticates as admin.</p>
+
+  <h2>🛡️ Mitigation</h2>
+  <ul>
+    <li>Parameterized queries (e.g., <code>mysqli_prepare()</code>)</li>
+    <li>Input sanitization</li>
+    <li>WAF (e.g., mod_security)</li>
+  </ul>
+
+  <a href="../../index.html">← Back to portfolio</a>
+</body>
+</html>
+
