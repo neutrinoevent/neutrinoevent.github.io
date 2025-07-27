@@ -1,0 +1,29 @@
+.
+├── .gitignore
+├── .jekyll-cache
+│   ├── .gitignore
+│   └── Jekyll
+│       └── Cache
+├── about.html
+├── assets
+│   ├── css
+│   │   └── style.css
+│   └── js
+│       └── darkmode.js
+├── cyber_meets_bio
+│   ├── 2025-07-28-welcome.html
+│   ├── 2025-08-03-byte-order-energy-models.html
+│   ├── 2025-08-04-self-modifying-systems.html
+│   └── 2025-08-12-stack-signal-pathways.html
+├── index.html
+├── posts
+│   ├── 2025-08-03-cellular-resonance.html
+│   ├── 2025-08-10-electron-cloud-patterns.html
+│   ├── 2025-08-18-scalar-hypothesis.html
+│   ├── 2025-08-25-constructing-socket-consciousness.html
+│   └── 2025-08-25-ether-theory-revisit.html
+├── posts.html
+├── site_structure_check.txt
+└── welcome.html
+
+9 directories, 18 files

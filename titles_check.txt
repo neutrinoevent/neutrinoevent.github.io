@@ -1,0 +1,13 @@
+about.html:  <title>About Me - Alexander Nichols</title>
+cyber_meets_bio/2025-07-28-welcome.html:  <title>Post 1 – Bioelectromagnetic Systems & Cellular Tuning</title>
+cyber_meets_bio/2025-08-03-byte-order-energy-models.html:  <title>Post 2 – Byte Order, Energy Flow & Stacked Systems</title>
+cyber_meets_bio/2025-08-04-self-modifying-systems.html:  <title>Self-Modifying Systems & Executable Memory</title>
+cyber_meets_bio/2025-08-12-stack-signal-pathways.html:  <title>Signal Routing in Stack-Based Systems</title>
+index.html:  <title>Elektonic | Alexander Nichols</title>
+posts.html:  <title>Posts - Alexander Nichols</title>
+posts/2025-08-03-cellular-resonance.html:  <title>Post 2 – Cellular Resonance and Morphic Fields</title>
+posts/2025-08-10-electron-cloud-patterns.html:  <title>Post 3 – EM Patterning in Subcellular Structures</title>
+posts/2025-08-18-scalar-hypothesis.html:  <title>Post 4 – Scalar Coupling Hypothesis in Neural Microcircuits</title>
+posts/2025-08-25-constructing-socket-consciousness.html:  <title>Constructing Socket-Consciousness</title>
+posts/2025-08-25-ether-theory-revisit.html:  <title>Post 5 – Reframing Ether in 21st-Century Physics</title>
+welcome.html:  <title>Post 1 – Welcome to Elektonic</title>
