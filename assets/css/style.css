@@ -172,23 +172,26 @@ body.light-mode .back-button a:hover {
 /* Frequency Spectrum Bar */
 .frequency-spectrum {
   background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffd93d);
-  height: 20px;
-  margin: 10px 0 30px;
-  border-radius: 10px;
+  height: 30px; /* slightly taller for clarity */
+  margin: 20px 0 40px;
+  border-radius: 15px;
   position: relative;
 }
 
+/* Frequency markers */
 .frequency-marker {
   position: absolute;
-  top: -25px;
-  font-size: 0.8em;
-  color: #bbb;
+  top: -35px;              /* moves markers up */
+  font-size: 0.85em;
+  color: #fff;             /* brighter text */
+  font-weight: bold;       /* more visible */
   text-align: center;
   transform: translateX(-50%);
   white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); /* contrast */
 }
 
-/* Frequency marker positions */
+/* Marker positions */
 .marker-elf { left: 5%; }
 .marker-vlf { left: 25%; }
 .marker-rf { left: 45%; }
