@@ -82,7 +82,6 @@ code {
   color: #7edfff;
 }
 
-/* 🛠️ FIX: Prevent first-line indent issue in <pre><code> blocks */
 pre > code {
   display: block;
   text-indent: 0;
@@ -156,10 +155,83 @@ body.light-mode table th {
   background-color: #e0e0e0;
   color: #111;
 }
+body.light-mode table td {
+  background-color: #fff;
+  color: #111;
+}
 body.light-mode .back-button a {
   background: #007acc;
   color: #fff;
 }
 body.light-mode .back-button a:hover {
   background: #005fa3;
+}
+
+/* ----------- POST-SPECIFIC ENHANCEMENTS ----------- */
+
+/* Frequency Spectrum Bar */
+.frequency-spectrum {
+  background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffd93d);
+  height: 20px;
+  margin: 10px 0 30px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.frequency-marker {
+  position: absolute;
+  top: -25px;
+  font-size: 0.8em;
+  color: #bbb;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Frequency marker positions */
+.marker-elf { left: 5%; }
+.marker-vlf { left: 25%; }
+.marker-rf { left: 45%; }
+.marker-microwave { left: 65%; }
+.marker-thz { left: 85%; }
+
+/* Circuit Diagram */
+.circuit-diagram {
+  font-family: monospace;
+  background: #1b1b1b;
+  padding: 15px;
+  border-left: 4px solid #00ffc3;
+  margin: 15px 0;
+  border-radius: 6px;
+}
+body.light-mode .circuit-diagram {
+  background: #f8f9fa;
+  border-left-color: #007acc;
+}
+
+/* Equation Box */
+.equation-box {
+  background: #0f2a33;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  border-left: 4px solid #00ffc3;
+}
+body.light-mode .equation-box {
+  background: #e8f4fd;
+  border-left-color: #007acc;
+}
+
+/* Research Highlight */
+.research-highlight {
+  background: #332b00;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid #ffc107;
+  margin: 10px 0;
+}
+body.light-mode .research-highlight {
+  background: #fff3cd;
+  border-left-color: #ffc107;
+  color: #333;
 }
