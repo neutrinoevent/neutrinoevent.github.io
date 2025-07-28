@@ -169,34 +169,54 @@ body.light-mode .back-button a:hover {
 
 /* ----------- POST-SPECIFIC ENHANCEMENTS ----------- */
 
-/* Frequency Spectrum Bar */
 .frequency-spectrum {
   background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffd93d);
-  height: 30px; /* slightly taller for clarity */
-  margin: 20px 0 40px;
+  height: 30px;
+  margin: 20px 0 50px;
   border-radius: 15px;
   position: relative;
 }
 
-/* Frequency markers */
 .frequency-marker {
   position: absolute;
-  top: -35px;              /* moves markers up */
-  font-size: 0.85em;
-  color: #fff;             /* brighter text */
-  font-weight: bold;       /* more visible */
+  top: -50px;
+  width: 80px;
   text-align: center;
   transform: translateX(-50%);
-  white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); /* contrast */
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  font-weight: 600;
 }
 
-/* Marker positions */
+.label-top {
+  display: block;
+  font-size: 0.9em;
+  margin-bottom: 3px;
+}
+
+.label-bottom {
+  display: block;
+  font-size: 0.75em;
+  opacity: 0.9;
+}
+
+/* Tick mark */
+.frequency-marker::after {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 12px;
+  background: #fff;
+  margin: 5px auto 0;
+  border-radius: 1px;
+}
+
 .marker-elf { left: 5%; }
 .marker-vlf { left: 25%; }
 .marker-rf { left: 45%; }
 .marker-microwave { left: 65%; }
 .marker-thz { left: 85%; }
+
 
 /* Circuit Diagram */
 .circuit-diagram {
